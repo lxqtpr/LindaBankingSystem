@@ -1,0 +1,26 @@
+spring:
+  cors:
+    allowCredentials: false
+    allowedOrigins: http://localhost:4200,http://127.0.0.1:5500
+    allowedMethods: GET,POST,PUT,DELETE,OPTIONS,HEAD
+    allowedHeaders: origin,content-type,accept,authorization,cookie
+  cloud:
+    gateway:
+      routes:
+        - id: transactions-service
+          uri: lb://transactions-service
+          predicates:
+            - Path=/api/transactions/**
+
+server:
+  port: 8762
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        cloud:
+          gateway:
+            route:
+              RouteDefinitionLocator: INFO
