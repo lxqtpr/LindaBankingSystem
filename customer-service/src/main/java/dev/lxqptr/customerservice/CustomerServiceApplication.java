@@ -1,18 +1,19 @@
-package dev.lxqtpr.linda.discoveryservice;
+package dev.lxqptr.customerservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableEurekaServer
-public class DiscoveryServiceApplication {
+@EnableDiscoveryClient
+@EnableFeignClients
+public class CustomerServiceApplication {
 
     public static void main(
             final String[] args
     ) {
-        SpringApplication.run(DiscoveryServiceApplication.class, args);
+        SpringApplication.run(CustomerServiceApplication.class, args);
     }
 
 }
