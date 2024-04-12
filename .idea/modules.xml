@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/LindaBankingSystem.iml" filepath="$PROJECT_DIR$/.idea/LindaBankingSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/account-service/account-service.iml" filepath="$PROJECT_DIR$/account-service/account-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/customer-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/customer-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/debit-card-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/debit-card-service.main.iml" />
     </modules>
   </component>
 </project>

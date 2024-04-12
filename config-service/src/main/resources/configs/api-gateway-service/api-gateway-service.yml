@@ -1,21 +1,19 @@
 spring:
+  application:
+    name: api-gateway-service
   cloud:
     gateway:
       routes:
-        - id: transactions-service
-          uri: lb://transactions-service
+        - id: account-service
+          uri: lb://account-service
           predicates:
-            - Path=/api/transactions/**
-
-server:
-  port: 8762
-
+            - Path=/api/accounts/**
 logging:
   level:
-    root: INFO
-    org:
-      springframework:
-        cloud:
-          gateway:
-            route:
-              RouteDefinitionLocator: INFO
+    root: info
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: info
+    org.springframework.cloud.gateway: trace
+    org.springframework.security: DEBUG
+server:
+  port: 8762
+  forward-headers-strategy: framework

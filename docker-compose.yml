@@ -1,27 +1,47 @@
+version: '3'
+
+networks:
+  banking-system:
+    driver: bridge
+
 services:
-  postgres:
-    image: postgres
-    restart: always
-    container_name: transactions-service-db
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=lxqtpr2021
-    volumes:
-      - db-data:/postgres
 
-  pgadmin:
-    container_name: pg-admin
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: lxqtpr@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: lxqtpr2021
-    ports:
-      - "5050:80"
-    volumes:
-      - pgAdmin-data:/pgadmin
+  #############################################################################
+  ###### Data Bases ###########################################################
+  #############################################################################
 
-volumes:
-  db-data:
-  pgAdmin-data:
+  postgres-customer:
+    container_name: customer-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: customer
+      POSTGRES_USER: customer
+      POSTGRES_PASSWORD: customer
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./volumes/customer:/data/postgres
+
+  postgres-debit-card:
+    container_name: debit-card-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: debit-card
+      POSTGRES_USER: debit-card
+      POSTGRES_PASSWORD: debit-card
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./volumes/debit-card:/data/postgres
+
+  postgres-account:
+    container_name: account-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: account
+      POSTGRES_USER: account
+      POSTGRES_PASSWORD: account
+    ports:
+      - "5437:5432"
+    volumes:
+      - ./volumes/account:/data/postgres

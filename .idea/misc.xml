@@ -4,6 +4,8 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/api-gateway-service" />
     <file type="web" url="file://$PROJECT_DIR$/config-service" />
+    <file type="web" url="file://$PROJECT_DIR$/customer-service" />
+    <file type="web" url="file://$PROJECT_DIR$/debit-card-service" />
     <file type="web" url="file://$PROJECT_DIR$/discovery-service" />
     <file type="web" url="file://$PROJECT_DIR$/service-descovery" />
     <file type="web" url="file://$PROJECT_DIR$/transactions-service" />
