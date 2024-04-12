@@ -25,11 +25,11 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.liquibase:liquibase-core")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    implementation("org.mapstruct:mapstruct:${property("mapstructVersion")}")
-    annotationProcessor("org.mapstruct:mapstruct-processor:${property("mapstructVersion")}")
     runtimeOnly("org.postgresql:postgresql")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    implementation("org.mapstruct:mapstruct:${property("mapstructVersion")}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${property("mapstructVersion")}")
 }
 
 dependencyManagement {

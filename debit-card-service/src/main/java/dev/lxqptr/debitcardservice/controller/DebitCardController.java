@@ -21,14 +21,14 @@ public class DebitCardController {
 
     @GetMapping
     public ResponseEntity<List<DebitCardResponse>> getAllCards() {
-        return ResponseEntity.ok(cardService.getAll());
+        return ResponseEntity.ok(cardService.getAllDebitCards());
     }
 
     @GetMapping("/info/{id}")
     public ResponseEntity<DebitCardResponse> getCardInfo(
             @PathVariable UUID id
     ) {
-        return ResponseEntity.ok(cardService.getInfo(id));
+        return ResponseEntity.ok(cardService.getInfoDebitCard(id));
     }
 
     @GetMapping("/customer/{customerId}")
@@ -43,15 +43,23 @@ public class DebitCardController {
     public ResponseEntity<DebitCardResponse> createCard(
             @RequestBody @Valid DebitCardRequest cardRequest
     ) {
-        return ResponseEntity.ok(cardService.save(cardRequest));
+        return ResponseEntity.ok(cardService.createDebitCard(cardRequest));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCard(
             @PathVariable UUID id
     ) {
-        cardService.delete(id);
+        cardService.deleteDebitCard(id);
         return ResponseEntity.ok("Card with id: " + id + " was blocked");
+    }
+
+    @DeleteMapping("/customer/{customerId}")
+    ResponseEntity<String> deleteAllByCustomerId(
+            @PathVariable UUID customerId
+    ) {
+        cardService.deleteAllByCustomerId(customerId);
+        return ResponseEntity.ok("All customer with id: " + customerId + " debit cards was blocked");
     }
 
 }

@@ -1,6 +1,5 @@
 package dev.lxqptr.customerservice.model.entity;
 
-import dev.lxqptr.customerservice.model.dto.DebitCardResponse;
 import dev.lxqptr.customerservice.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -40,5 +38,8 @@ public class Customer {
     @Column(name = "c_gender")
     @Enumerated(EnumType.STRING)
     Gender gender;
+
+    @Column(name = "c_account_id")
+    UUID accountId;
 
 }

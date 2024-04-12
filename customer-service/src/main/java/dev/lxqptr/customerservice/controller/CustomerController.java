@@ -22,37 +22,52 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
-        return ResponseEntity.ok(customerService.getAll());
+        return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/info/{customerId}")
     public ResponseEntity<CustomerResponse> getInfoCustomer(
-            @PathVariable UUID id
+            @PathVariable final UUID customerId
     ) {
-        return ResponseEntity.ok(customerService.getInfo(id));
+        return ResponseEntity.ok(customerService.getInfoCustomer(customerId));
+    }
+
+    @GetMapping("/info/{accountId}")
+    public ResponseEntity<CustomerResponse> getInfoCustomerByAccountId(
+            @PathVariable final UUID accountId
+    ) {
+        return ResponseEntity.ok(customerService.getInfoCustomerByAccountId(accountId));
     }
 
     @PostMapping("/create")
     public ResponseEntity<CustomerResponse> createCustomer(
-            @RequestBody @Valid CustomerRequest customerRequest
+            @RequestBody @Valid final CustomerRequest customerRequest
     ) {
-        return ResponseEntity.ok(customerService.save(customerRequest));
+        return ResponseEntity.ok(customerService.createCustomer(customerRequest));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{customerId}")
     public ResponseEntity<CustomerResponse> updateCustomer(
-            @RequestBody CustomerRequest customerRequest,
-            @PathVariable UUID id
+            @RequestBody final CustomerRequest customerRequest,
+            @PathVariable final UUID customerId
     ) {
-        return ResponseEntity.ok(customerService.update(customerRequest, id));
+        return ResponseEntity.ok(customerService.updateCustomer(customerRequest, customerId));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{customerId}")
     public ResponseEntity<String> deleteCustomer(
-            @PathVariable UUID id
+            @PathVariable final UUID customerId
     ) {
-        customerService.delete(id);
-        return ResponseEntity.ok("Customer with id: " + id + " was deleted");
+        customerService.deleteCustomer(customerId);
+        return ResponseEntity.ok("Customer with id: " + customerId + " was deleted");
+    }
+
+    @DeleteMapping("/account/{accountId}")
+    ResponseEntity<String> deleteByAccountId(
+            @PathVariable final UUID accountId
+    ) {
+        customerService.deleteCustomerByAccountId(accountId);
+        return ResponseEntity.ok("Customer with account id: " + accountId + " was deleted");
     }
 
 

@@ -20,10 +20,8 @@ public interface DebitCardClient {
     );
 
     @DeleteMapping("/customer/{customerId}")
-    ResponseEntity<String> deleteByCustomerId(
+    ResponseEntity<String> deleteAllByCustomerId(
             @PathVariable UUID customerId
     );
-
-
 
 }

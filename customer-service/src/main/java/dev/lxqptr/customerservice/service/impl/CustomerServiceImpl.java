@@ -28,27 +28,52 @@ public class CustomerServiceImpl implements CustomerService {
     private final DebitCardClient debitCardClient;
 
     @Override
-    public List<CustomerResponse> getAll() {
+    public List<CustomerResponse> getAllCustomers() {
         return customerMapper.toResponse(customerRepository.findAll());
     }
 
     @Override
-    public Customer get(
-            final UUID id
+    public Customer getByCustomerId(
+            final UUID customerId
     ) {
-        return customerRepository.findById(id)
+        return customerRepository.findById(customerId)
                 .orElseThrow(CustomerNotFoundException::new);
     }
 
     @Override
-    public CustomerResponse getInfo(
-            final UUID id
+    public Customer getByAccountId(
+            final UUID accountId
     ) {
-        Customer customer = get(id);
-        CustomerResponse customerResponse = customerMapper.toResponse(customer);
+        return customerRepository.findByAccountId(accountId)
+                .orElseThrow(CustomerNotFoundException::new);
+    }
+
+    @Override
+    public CustomerResponse getInfoCustomer(
+            final UUID customerId
+    ) {
+        Customer existingCustomer = getByCustomerId(customerId);
+        CustomerResponse customerResponse = customerMapper.toResponse(existingCustomer);
 
         customerResponse.setDebitCards(debitCardClient
-                .getAllByCustomerId(id)
+                .getAllByCustomerId(customerId)
+                .getBody()
+                .values()
+                .stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList()));
+        return customerResponse;
+    }
+
+    @Override
+    public CustomerResponse getInfoCustomerByAccountId(
+            final UUID accountId
+    ) {
+        Customer existingCustomer = getByAccountId(accountId);
+        CustomerResponse customerResponse = customerMapper.toResponse(existingCustomer);
+
+        customerResponse.setDebitCards(debitCardClient
+                .getAllByCustomerId(existingCustomer.getId())
                 .getBody()
                 .values()
                 .stream()
@@ -59,49 +84,53 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public CustomerResponse save(
+    public CustomerResponse createCustomer(
             final CustomerRequest customerRequest
     ) {
         Customer customer = customerMapper.toCustomer(customerRequest);
-        customer.setFirstname(customerRequest.getFirstname());
-        customer.setLastname(customerRequest.getLastname());
-        customer.setEmail(customerRequest.getEmail());
-        customer.setUsername(customerRequest.getUsername());
-        customer.setGender(customerRequest.getGender());
 
         if (customer == null) {
             throw new InvalidArgumentException("Customer or accountId cannot be null");
         }
 
-        log.info("Saving customer with id: {}", customer.getId());
         customerRepository.save(customer);
+        log.info("Saving customer with id: {}", customer.getId());
 
         return customerMapper.toResponse(customer);
     }
 
     @Override
     @Transactional
-    public CustomerResponse update(
+    public CustomerResponse updateCustomer(
             final CustomerRequest customerRequest,
-            final UUID id
+            final UUID customerId
     ) {
-        Customer existingCustomer = get(id);
+        Customer existingCustomer = getByCustomerId(customerId);
         Customer updatedCustomer = customerMapper.toCustomer(customerRequest);
         updatedCustomer.setId(existingCustomer.getId());
 
-        log.info("Updating customer with id: {}", updatedCustomer.getId());
         customerRepository.save(updatedCustomer);
+        log.info("Updating customer with id: {}", updatedCustomer.getId());
 
         return customerMapper.toResponse(updatedCustomer);
     }
 
     @Override
     @Transactional
-    public void delete(
-            final UUID id
+    public void deleteCustomer(
+            final UUID customerId
     ) {
-        debitCardClient.deleteByCustomerId(id);
-        customerRepository.deleteById(id);
+        debitCardClient.deleteAllByCustomerId(customerId);
+        customerRepository.deleteById(customerId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCustomerByAccountId(
+            final UUID accountId
+    ) {
+        debitCardClient.deleteAllByCustomerId(getByAccountId(accountId).getId());
+        customerRepository.deleteByAccountId(accountId);
     }
 
 }

@@ -10,20 +10,22 @@ import java.util.UUID;
 
 public interface DebitCardService {
 
-    DebitCardResponse getInfo(UUID id);
+    DebitCardResponse getInfoDebitCard(UUID id);
 
-    DebitCardResponse save(DebitCardRequest cardRequest);
+    DebitCardResponse createDebitCard(DebitCardRequest cardRequest);
 
-    void delete(UUID id);
+    void deleteDebitCard(UUID id);
 
     void deleteByCustomerId(UUID customerId);
 
-    List<DebitCardResponse> getAll();
+    List<DebitCardResponse> getAllDebitCards();
 
     Map<UUID, List<DebitCardResponse>> getByCustomerId(UUID customerId);
 
     DebitCardResponse getByNumberAndExpirationDateAndCvv(String number, String date, String cvv);
 
-    DebitCard get(UUID id);
+    DebitCard getDebitCard(UUID id);
+
+    void deleteAllByCustomerId(UUID customerId);
 
 }

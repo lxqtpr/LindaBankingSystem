@@ -1,6 +1,14 @@
 version: '3'
 
+networks:
+  banking-system:
+    driver: bridge
+
 services:
+
+  #############################################################################
+  ###### Data Bases ###########################################################
+  #############################################################################
 
   postgres-customer:
     container_name: customer-db
@@ -25,3 +33,15 @@ services:
       - "5436:5432"
     volumes:
       - ./volumes/debit-card:/data/postgres
+
+  postgres-account:
+    container_name: account-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: account
+      POSTGRES_USER: account
+      POSTGRES_PASSWORD: account
+    ports:
+      - "5437:5432"
+    volumes:
+      - ./volumes/account:/data/postgres

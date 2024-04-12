@@ -9,16 +9,22 @@ import java.util.UUID;
 
 public interface CustomerService {
 
-    List<CustomerResponse> getAll();
+    List<CustomerResponse> getAllCustomers();
 
-    Customer get(UUID id);
+    Customer getByCustomerId(UUID customerId);
 
-    CustomerResponse getInfo(UUID id);
+    Customer getByAccountId(UUID accountId);
 
-    CustomerResponse save(CustomerRequest customerRequest);
+    CustomerResponse getInfoCustomer(UUID id);
 
-    CustomerResponse update(CustomerRequest customerRequest, UUID id);
+    CustomerResponse getInfoCustomerByAccountId(UUID accountId);
 
-    void delete(UUID id);
+    CustomerResponse createCustomer(CustomerRequest customerRequest);
+
+    CustomerResponse updateCustomer(CustomerRequest customerRequest, UUID id);
+
+    void deleteCustomer(UUID id);
+
+    void deleteCustomerByAccountId(UUID accountId);
 
 }

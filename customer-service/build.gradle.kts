@@ -32,11 +32,11 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.mapstruct:mapstruct:${property("mapstructVersion")}")
-    annotationProcessor("org.mapstruct:mapstruct-processor:${property("mapstructVersion")}")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
+    implementation("org.mapstruct:mapstruct:${property("mapstructVersion")}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${property("mapstructVersion")}")
 }
 
 dependencyManagement {

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,16 +32,16 @@ public class DebitCardServiceImpl implements DebitCardService {
 
 
     @Override
-    public DebitCardResponse getInfo(
-            final UUID id
+    public DebitCardResponse getInfoDebitCard(
+            final UUID debitCardId
     ) {
-        DebitCard card = get(id);
+        DebitCard card = getDebitCard(debitCardId);
         return cardMapper.toResponse(card);
     }
 
     @Override
     @Transactional
-    public DebitCardResponse save(
+    public DebitCardResponse createDebitCard(
             final DebitCardRequest cardRequest
     ) {
         DebitCard card = cardMapper.toCard(cardRequest);
@@ -63,10 +64,10 @@ public class DebitCardServiceImpl implements DebitCardService {
 
     @Override
     @Transactional
-    public void delete(
-            final UUID id
+    public void deleteDebitCard(
+            final UUID debitCardId
     ) {
-        cardRepository.deleteById(id);
+        cardRepository.deleteById(debitCardId);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class DebitCardServiceImpl implements DebitCardService {
     }
 
     @Override
-    public List<DebitCardResponse> getAll() {
+    public List<DebitCardResponse> getAllDebitCards() {
         return cardMapper.toResponse(cardRepository.findAll());
     }
 
@@ -111,10 +112,23 @@ public class DebitCardServiceImpl implements DebitCardService {
     }
 
     @Override
-    public DebitCard get(
-            final UUID id
+    public DebitCard getDebitCard(
+            final UUID debitCardId
     ) {
-        return cardRepository.findById(id)
+        return cardRepository.findById(debitCardId)
                 .orElseThrow(DebitCardNotFoundException::new);
     }
+
+    @Override
+    public void deleteAllByCustomerId(
+            final UUID customerId
+    ) {
+        cardRepository
+                .findAll()
+                .stream()
+                .map(DebitCard::getCustomerId)
+                .toList()
+                .forEach(cardRepository::deleteByCustomerId);
+    }
+
 }
